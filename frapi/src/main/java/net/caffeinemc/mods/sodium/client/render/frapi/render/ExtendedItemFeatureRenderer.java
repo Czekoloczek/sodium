@@ -26,6 +26,7 @@ import net.caffeinemc.mods.sodium.mixin.frapi.ItemFeatureRendererAccessor;
 import net.fabricmc.fabric.api.client.renderer.v1.mesh.QuadEmitter;
 import net.fabricmc.fabric.api.client.renderer.v1.render.submit.ExtendedItemSubmit;
 import net.minecraft.client.renderer.feature.FeatureFrameContext;
+import net.minecraft.client.renderer.feature.ItemFeatureRenderer;
 import net.minecraft.client.renderer.feature.RenderTypeFeatureRenderer;
 import net.minecraft.client.renderer.item.ItemStackRenderState;
 import net.minecraft.client.renderer.rendertype.RenderType;
@@ -154,7 +155,12 @@ public class ExtendedItemFeatureRenderer extends RenderTypeFeatureRenderer<Exten
 	}
 
 	private VertexConsumer getFoilBuffer(RenderType renderType, PoseStack.@Nullable Pose foilDecalPose) {
-		RenderType foilRenderType = ItemFeatureRendererAccessor.fabric_useTransparentGlint(renderType) ? RenderTypes.glintTranslucent() : RenderTypes.glint();
+		// 26.3 reworked item glint render types: the parameterless RenderTypes.glint()/glintTranslucent()
+		// were replaced by per-texture itemCutoutGlint(id)/itemTranslucentGlint(id). Use the vanilla item
+		// glint texture (ItemFeatureRenderer.ENCHANTED_GLINT_ITEM) to preserve the previous behaviour.
+		RenderType foilRenderType = ItemFeatureRendererAccessor.fabric_useTransparentGlint(renderType)
+				? RenderTypes.itemTranslucentGlint(ItemFeatureRenderer.ENCHANTED_GLINT_ITEM)
+				: RenderTypes.itemCutoutGlint(ItemFeatureRenderer.ENCHANTED_GLINT_ITEM);
 		VertexConsumer foilBuffer = this.getVertexBuilder(foilRenderType);
 
 		if (foilDecalPose != null) {

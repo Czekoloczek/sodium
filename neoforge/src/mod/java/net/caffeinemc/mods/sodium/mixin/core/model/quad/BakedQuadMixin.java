@@ -139,7 +139,8 @@ public abstract class BakedQuadMixin implements BakedQuadView {
 
     @Override
     public boolean hasShade() {
-        return this.materialInfo.shade();
+        // 26.3 removed BakedQuad.MaterialInfo#shade(); baked quads are now always directionally shaded.
+        return true;
     }
 
     @Override

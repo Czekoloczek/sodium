@@ -3,9 +3,9 @@ package net.caffeinemc.mods.sodium.mixin.core.render.world;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
-import com.mojang.blaze3d.buffers.GpuBufferSlice;
-import com.mojang.blaze3d.systems.RenderPass;
-import com.mojang.blaze3d.textures.FilterMode;
+import com.mojang.renderpearl.api.buffers.GpuBufferSlice;
+import com.mojang.renderpearl.api.commands.RenderPass;
+import com.mojang.renderpearl.api.textures.FilterMode;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.caffeinemc.mods.sodium.client.SodiumClientMod;
 import net.caffeinemc.mods.sodium.client.render.SodiumWorldRenderer;
@@ -172,7 +172,7 @@ public abstract class LevelRendererMixin implements LevelRendererExtension {
      * @reason Allow control of the texture filtering mode
      * @author pajic
      */
-    @Redirect(method = "lambda$addMainPass$0", at = @At(value = "FIELD", target = "Lcom/mojang/blaze3d/textures/FilterMode;LINEAR:Lcom/mojang/blaze3d/textures/FilterMode;", opcode = Opcodes.GETSTATIC))
+    @Redirect(method = "lambda$addMainPass$0", at = @At(value = "FIELD", target = "Lcom/mojang/renderpearl/api/textures/FilterMode;LINEAR:Lcom/mojang/renderpearl/api/textures/FilterMode;", opcode = Opcodes.GETSTATIC))
     private FilterMode setFilterMode() {
         return SodiumClientMod.options().quality.pixelFilteringMode;
     }

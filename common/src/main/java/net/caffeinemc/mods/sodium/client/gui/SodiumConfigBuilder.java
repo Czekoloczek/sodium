@@ -6,7 +6,7 @@ import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.blaze3d.platform.VideoMode;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.textures.FilterMode;
+import com.mojang.renderpearl.api.textures.FilterMode;
 import net.caffeinemc.mods.sodium.api.config.ConfigEntryPoint;
 import net.caffeinemc.mods.sodium.api.config.ConfigState;
 import net.caffeinemc.mods.sodium.api.config.StorageEventHandler;
@@ -377,14 +377,10 @@ public class SodiumConfigBuilder implements ConfigEntryPoint {
                                         Component.translatable("options.clouds.fancy")))
                                 .setDefaultValue(CloudStatus.FANCY)
                                 .setBinding((value) -> {
+                                    // 26.3 removed "Fabulous" graphics along with the dedicated clouds
+                                    // transparency framebuffer (LevelRenderer#cloudsTarget), so there is
+                                    // no longer a separate target to clear when toggling this option.
                                     this.vanillaOpts.cloudStatus().set(value);
-
-                                    if (Minecraft.getInstance().gameRenderer.gameRenderState().useShaderTransparency()) {
-                                        RenderTarget framebuffer = Minecraft.getInstance().levelRenderer.cloudsTarget();
-                                        if (framebuffer != null) {
-                                            RenderSystem.getDevice().createCommandEncoder().clearColorAndDepthTextures(framebuffer.getColorTexture(), new Vector4f(1.0f), framebuffer.getDepthTexture(), 1.0f);
-                                        }
-                                    }
                                 }, () -> this.vanillaOpts.cloudStatus().get())
                                 .setImpact(OptionImpact.LOW)
                 )

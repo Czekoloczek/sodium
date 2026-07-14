@@ -1,12 +1,12 @@
 package net.caffeinemc.mods.sodium.client.render.chunk;
 
-import com.mojang.blaze3d.IndexType;
-import com.mojang.blaze3d.buffers.GpuBuffer;
-import com.mojang.blaze3d.buffers.GpuBufferSlice;
-import com.mojang.blaze3d.systems.RenderPass;
+import com.mojang.renderpearl.api.pipeline.IndexType;
+import com.mojang.renderpearl.api.buffers.GpuBuffer;
+import com.mojang.renderpearl.api.buffers.GpuBufferSlice;
+import com.mojang.renderpearl.api.commands.RenderPass;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.textures.FilterMode;
-import com.mojang.blaze3d.textures.GpuSampler;
+import com.mojang.renderpearl.api.textures.FilterMode;
+import com.mojang.renderpearl.api.textures.GpuSampler;
 import net.caffeinemc.mods.sodium.client.SodiumClientMod;
 import net.caffeinemc.mods.sodium.client.gpu.device.batch.MultiDrawBatch;
 import net.caffeinemc.mods.sodium.client.gpu.device.context.DrawContext;
@@ -107,7 +107,7 @@ public class DefaultChunkRenderer extends ShaderChunkRenderer {
         try (RenderPass pass = encoder.createRenderPass(() -> "Terrain",
                 renderPass.getTarget().getColorTextureView(), Optional.empty(),
                 renderPass.getTarget().getDepthTextureView(), OptionalDouble.empty())) {
-            pass.setPipeline(this.activeProgram);
+            pass.setPipeline(RenderSystem.getCompiledPipeline(this.activeProgram));
             this.drawContext.setContext(pass, this.activeProgram);
 
             if (!useIndexedTessellation && this.sharedIndexBuffer.getBufferObject() != null) {

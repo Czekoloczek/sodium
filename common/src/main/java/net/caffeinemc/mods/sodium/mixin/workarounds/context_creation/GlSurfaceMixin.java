@@ -1,6 +1,6 @@
 package net.caffeinemc.mods.sodium.mixin.workarounds.context_creation;
 
-import com.mojang.blaze3d.opengl.GlSurface;
+import com.mojang.renderpearl.backend.opengl.GlSurface;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.caffeinemc.mods.sodium.client.compatibility.checks.ModuleScanner;
 import net.caffeinemc.mods.sodium.client.compatibility.checks.PostLaunchChecks;

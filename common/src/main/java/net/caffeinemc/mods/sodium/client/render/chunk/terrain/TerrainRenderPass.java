@@ -1,8 +1,8 @@
 package net.caffeinemc.mods.sodium.client.render.chunk.terrain;
 
-import com.mojang.blaze3d.pipeline.RenderPipeline;
+import com.mojang.renderpearl.api.pipeline.RenderPipeline;
 import com.mojang.blaze3d.pipeline.RenderTarget;
-import com.mojang.blaze3d.textures.GpuTextureView;
+import com.mojang.renderpearl.api.textures.GpuTextureView;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import net.minecraft.client.renderer.texture.TextureAtlas;
@@ -34,7 +34,10 @@ public class TerrainRenderPass {
     }
 
     public RenderTarget getTarget() {
-        return (this.isTranslucent && Minecraft.getInstance().gameRenderer.gameRenderState().useShaderTransparency()) ? Minecraft.getInstance().levelRenderer.translucentTarget() : Minecraft.getInstance().gameRenderer.mainRenderTarget();
+        // 26.3 removed "Fabulous" graphics and its separate transparency framebuffers
+        // (GameRenderState#useShaderTransparency / LevelRenderer#translucentTarget), so all
+        // terrain now renders into the main render target.
+        return Minecraft.getInstance().gameRenderer.mainRenderTarget();
     }
 
     public GpuTextureView getAtlas() {

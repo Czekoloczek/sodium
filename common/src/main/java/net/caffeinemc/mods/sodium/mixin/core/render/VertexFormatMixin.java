@@ -1,6 +1,6 @@
 package net.caffeinemc.mods.sodium.mixin.core.render;
 
-import com.mojang.blaze3d.vertex.VertexFormat;
+import com.mojang.renderpearl.api.vertex.VertexFormat;
 import net.caffeinemc.mods.sodium.api.vertex.format.VertexFormatExtensions;
 import net.caffeinemc.mods.sodium.api.vertex.format.VertexFormatRegistry;
 import org.spongepowered.asm.mixin.Mixin;

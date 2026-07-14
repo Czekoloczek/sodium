@@ -88,6 +88,12 @@ public class ChunkVertexConsumer implements VertexConsumer {
         return this.potentiallyEndVertex();
     }
 
+    // The third UV channel (added in 26.3) is unused by Sodium's chunk vertex format.
+    @Override
+    public @NonNull VertexConsumer setUv3(float u, float v) {
+        return this.potentiallyEndVertex();
+    }
+
     @Override
     public @NonNull VertexConsumer setOverlay(int uv) {
         return this.potentiallyEndVertex();

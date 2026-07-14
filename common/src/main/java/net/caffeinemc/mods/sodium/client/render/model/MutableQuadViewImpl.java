@@ -285,7 +285,9 @@ public abstract class MutableQuadViewImpl extends QuadViewImpl implements ListSt
     public final MutableQuadViewImpl fromBakedQuad(BakedQuad quad) {
         this.fromVanillaInternal(((BakedQuadView) (Object) quad));
         this.setNominalFace(quad.direction());
-        this.setDiffuseShade(quad.materialInfo().shade());
+        // 26.3 replaced the per-quad boolean shade() with an optional shadeDirectionOverride(); baked
+        // cuboid quads are now always directionally shaded, so diffuse shading is unconditionally enabled.
+        this.setDiffuseShade(true);
         this.setTintIndex(quad.materialInfo().tintIndex());
         this.setAmbientOcclusion(((BakedQuadView) (Object) quad).hasAO() ? TriState.DEFAULT : TriState.FALSE); // TODO: TRUE, or DEFAULT?
         this.setItemRenderType(quad.materialInfo().itemRenderType());

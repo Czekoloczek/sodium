@@ -1,7 +1,7 @@
 package net.caffeinemc.mods.sodium.mixin.core;
 
-import com.mojang.blaze3d.systems.RenderPass;
-import com.mojang.blaze3d.systems.RenderPassBackend;
+import com.mojang.renderpearl.api.commands.RenderPass;
+import com.mojang.renderpearl.backend.api.RenderPassBackend;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 

@@ -1,6 +1,6 @@
 package net.caffeinemc.mods.sodium.mixin.core;
 
-import com.mojang.blaze3d.opengl.GlBackend;
+import com.mojang.renderpearl.backend.opengl.GlBackend;
 import net.caffeinemc.mods.sodium.client.SodiumClientMod;
 import net.caffeinemc.mods.sodium.client.compatibility.workarounds.Workarounds;
 import net.caffeinemc.mods.sodium.client.services.PlatformRuntimeInformation;

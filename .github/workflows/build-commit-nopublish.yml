@@ -3,9 +3,13 @@
 name: build-commit-nopublish
 
 on:
+  # Build automatically on every push to any branch other than `dev`
+  # (pushes to `dev` are handled by build-commit.yml).
   push:
     branches-ignore:
       - dev
+  # Allow triggering a build manually from the GitHub Actions UI on any branch.
+  workflow_dispatch:
 
 jobs:
   build:

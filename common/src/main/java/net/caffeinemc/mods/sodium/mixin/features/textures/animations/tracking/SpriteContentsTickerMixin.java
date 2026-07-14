@@ -1,6 +1,6 @@
 package net.caffeinemc.mods.sodium.mixin.features.textures.animations.tracking;
 
-import com.mojang.blaze3d.buffers.GpuBufferSlice;
+import com.mojang.renderpearl.api.buffers.GpuBufferSlice;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.caffeinemc.mods.sodium.client.SodiumClientMod;
 import net.caffeinemc.mods.sodium.client.render.texture.SpriteContentsExtension;
