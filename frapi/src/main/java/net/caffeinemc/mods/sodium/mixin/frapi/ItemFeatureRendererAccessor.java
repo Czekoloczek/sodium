@@ -18,17 +18,14 @@ package net.caffeinemc.mods.sodium.mixin.frapi;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.feature.ItemFeatureRenderer;
-import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.world.item.ItemDisplayContext;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(ItemFeatureRenderer.class)
 public interface ItemFeatureRendererAccessor {
-    @Invoker("useTransparentGlint")
-    static boolean fabric_useTransparentGlint(RenderType renderType) {
-		throw new AssertionError();
-	}
+    // 26.3 removed ItemFeatureRenderer#useTransparentGlint(RenderType); the transparent-vs-cutout
+    // glint decision now comes from RenderType#hasBlending() (see ExtendedItemFeatureRenderer#getFoilBuffer).
 
     @Invoker("computeFoilDecalPose")
     static PoseStack.Pose fabric_computeFoilDecalPose(ItemDisplayContext type, PoseStack.Pose pose) {

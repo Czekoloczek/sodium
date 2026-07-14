@@ -25,12 +25,11 @@ import net.caffeinemc.mods.sodium.client.render.model.MutableQuadViewImpl;
 import net.caffeinemc.mods.sodium.mixin.frapi.ItemFeatureRendererAccessor;
 import net.fabricmc.fabric.api.client.renderer.v1.mesh.QuadEmitter;
 import net.fabricmc.fabric.api.client.renderer.v1.render.submit.ExtendedItemSubmit;
+import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.feature.FeatureFrameContext;
-import net.minecraft.client.renderer.feature.ItemFeatureRenderer;
 import net.minecraft.client.renderer.feature.RenderTypeFeatureRenderer;
 import net.minecraft.client.renderer.item.ItemStackRenderState;
 import net.minecraft.client.renderer.rendertype.RenderType;
-import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.resources.model.geometry.BakedQuad;
 import net.minecraft.util.LightCoordsUtil;
 import org.jspecify.annotations.Nullable;
@@ -155,12 +154,13 @@ public class ExtendedItemFeatureRenderer extends RenderTypeFeatureRenderer<Exten
 	}
 
 	private VertexConsumer getFoilBuffer(RenderType renderType, PoseStack.@Nullable Pose foilDecalPose) {
-		// 26.3 reworked item glint render types: the parameterless RenderTypes.glint()/glintTranslucent()
-		// were replaced by per-texture itemCutoutGlint(id)/itemTranslucentGlint(id). Use the vanilla item
-		// glint texture (ItemFeatureRenderer.ENCHANTED_GLINT_ITEM) to preserve the previous behaviour.
-		RenderType foilRenderType = ItemFeatureRendererAccessor.fabric_useTransparentGlint(renderType)
-				? RenderTypes.itemTranslucentGlint(ItemFeatureRenderer.ENCHANTED_GLINT_ITEM)
-				: RenderTypes.itemCutoutGlint(ItemFeatureRenderer.ENCHANTED_GLINT_ITEM);
+		// 26.3 removed ItemFeatureRenderer#useTransparentGlint(RenderType); the transparent-vs-cutout glint
+		// choice now derives from the item render type's blending, and the glint render types come from the
+		// per-item Sheets helpers (with the *Special* variants used when a foil decal pose is present).
+		boolean transparentGlint = renderType.hasBlending();
+		RenderType foilRenderType = foilDecalPose != null
+				? (transparentGlint ? Sheets.translucentItemGlintSpecialSheet() : Sheets.cutoutItemGlintSpecialSheet())
+				: (transparentGlint ? Sheets.translucentItemGlintSheet() : Sheets.cutoutItemGlintSheet());
 		VertexConsumer foilBuffer = this.getVertexBuilder(foilRenderType);
 
 		if (foilDecalPose != null) {
